@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News</title>
+    <link href="../assets/css/news.css?v=111" rel="stylesheet" type="text/css">
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+</head>
+<script>
+    var path = "";
+    var search = "";
+    var id;
+    var obj;
+
+    function show_info() {
+        if (search == "") {
+            path = "students";
+        } else {
+            path = "stu_no";
+        }
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/student/" + path,
+            data: "sno=" + search,
+            success: function (res) {
+                let dom = $("#list");
+                dom.empty();
+                res.result.map(obj = > {
+                    dom
+                    .append("<tr class='t_content'><td>" + obj.id + "</td><td>" + obj.sno + "</td><td>" + obj.stu_name + "</td><td>" + obj.stu_sex + "</td><td>" + obj.stu_age + "</td><td>" + obj.class_name + "</td><td><span class='update'onclick='update(" + JSON.stringify(obj) + ")'>修改</span><span class='del'onclick='delete_info(" + obj.id + ")'>删除</span></td><</tr>");
+            })
+            }
+        });
+    }
+
+    function delete_info(id) {
+        if (id == "") {
+            console.log("id is null!");
+        } else {
+            var r = confirm("确认删除该用户?");
+            if (r) {
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8080/student/delete",
+                    data: "id=" + id,
+                    success: function (res) {
+                        console.log(res.result);
+                        show_info();
+                    }
+                });
+            }
+        }
+    }
+
+    function add_info() {
+        if ($("#stu_no").val() && $("#stu_name").val() != "") {
+            var student = {
+                "sno": $("#stu_no").val(),
+                "stu_name": $("#stu_name").val(),
+                "stu_sex": $("#stu_sex").val(),
+                "stu_age": $("#stu_age").val(),
+                "class_name": $("#class_name").val()
+            };
+            console.log(student);
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/student/save",
+                data: "str=" + JSON.stringify(student),
+                success: function (res) {
+                    console.log(res.result);
+                    show_info();
+                    $("#addpage").hide(400);
+                    $("#overlay").hide();
+                }
+            });
+        } else {
+            console.log("some column is null");
+        }
+    }
+
+    function update(obj) {
+        $("#addpage").show(400);
+        $("#overlay").show();
+        $("#submit").hide();
+        $("#update").show();
+        $("#stu_id").val(obj.id);
+        $("#stu_no").val(obj.sno);
+        $("#stu_name").val(obj.stu_name);
+        $("#stu_sex").val(obj.stu_sex);
+        $("#stu_age").val(obj.stu_age);
+        $("#class_name").val(obj.class_name);
+    }
+
+    function update_info() {
+        var student = {
+            "id": $("#stu_id").val(),
+            "sno": $("#stu_no").val(),
+            "stu_name": $("#stu_name").val(),
+            "stu_sex": $("#stu_sex").val(),
+            "stu_age": $("#stu_age").val(),
+            "class_name": $("#class_name").val()
+        };
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/student/update",
+            data: "str=" + JSON.stringify(student),
+            success: function (res) {
+                console.log(res.result);
+                show_info();
+                $("#addpage").hide(400);
+                $("#overlay").hide();
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        /*alert("欢迎您进入学生信息系统！");*/
+        show_info();
+        $("#search").click(function () {
+            search = $("#sno").val();
+            show_info();
+        });
+        $("#add").click(function () {
+            $("#addpage").show(400);
+            $("#overlay").show();
+            $("#update").hide();
+            $("#submit").show();
+        });
+        $("#overlay").click(function () {
+            $("#addpage").hide(400);
+            $("#overlay").hide();
+        });
+    });
+</script>
+<body>
+<div id="header">
+    <input id="sno" name="sno" placeholder="学号" type="search">
+    <button id="search">查询</button>
+    <button id="add">添加</button>
+</div>
+<table id="table_block">
+    <tr class="th">
+        <th>ID</th>
+        <th>学号</th>
+        <th>姓名</th>
+        <th>性别</th>
+        <th>年龄</th>
+        <th>班级</th>
+        <th>操作</th>
+    </tr>
+    <hr>
+    <tbody id="list">
+    </tbody>
+</table>
+<div id="addpage">
+    <input id="stu_id" name="id" type="text">
+    <div class="stu_info">
+        <p>学号:</p>
+        <input id="stu_no" name="stu_no" placeholder="请输入学号..." required type="text">
+    </div>
+    <div class="stu_info">
+        <p>姓名:</p>
+        <input id="stu_name" name="stu_name" placeholder="请输入姓名..." required type="text">
+    </div>
+    <div class="stu_info">
+        <p>性别:</p>
+        <input id="stu_sex" name="stu_sex" placeholder="请输入性别..." type="text">
+    </div>
+    <div class="stu_info">
+        <p>年龄:</p>
+        <input id="stu_age" name="stu_age" placeholder="请输入年龄..." type="number">
+    </div>
+    <div class="stu_info">
+        <p>班级:</p>
+        <input id="class_name" name="class_name" placeholder="请输入班级..." type="text">
+    </div>
+    <button id="submit" onclick="add_info()">提交</button>
+    <button id="update" onclick="update_info()">修改</button>
+</div>
+<div id="overlay">
+</div>
+</body>
+</html>

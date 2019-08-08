@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign In</title>
+    <link href="../assets/css/login.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+</head>
+<script>
+    function login() {
+        var email = $("#user").val();
+        var pwd = $("#password").val();
+        if (email == "") {
+            alert("账号不能为空");
+        } else if (pwd == "") {
+            alert("密码不能为空");
+        } else {
+            var user = {
+                "email": $("#user").val(),
+                "pwd": $("#password").val()
+            };
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/user/login",
+                data: "str=" + JSON.stringify(user),
+                success: function (res) {
+                    if (res.result == 'success') {
+                        alert("登录成功！");
+                        window.location.href = "news.html";
+                    } else {
+                        alert(res.result);
+                        $("input").empty();
+                    }
+                }
+            });
+        }
+    }
+</script>
+<body>
+<div id="sign_in">
+    <div id="t_language">Sign In</div>
+    <div id="user_info">
+        <img class="picture" src="../assets/image/user.png">
+        <input class="u_content" id="user" name="user" placeholder="User" required type="email">
+        <hr>
+    </div>
+    <div id="pwd_info">
+        <img class="picture" src="../assets/image/pwd.png">
+        <input class="u_content" id="password" maxlength="16" name="pwd" placeholder="Password" required
+               type="password">
+        <hr>
+    </div>
+    <button id="sign_btn" onclick="login()">SIGN IN</button>
+    <a href="register.html">Sign Up?</a>
+</div>
+</body>
+</html>

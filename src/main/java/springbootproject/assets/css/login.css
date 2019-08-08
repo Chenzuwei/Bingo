@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    background-image: url('../image/timg.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
+#sign_in {
+    position: relative;
+    width: 300px;
+    height: 450px;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: 140px;
+    text-align: center;
+    background: rgba(248, 248, 249, .1);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px 5px rgba(0, 0, 0, 0.24);
+}
+
+#sign_in:hover {
+    box-shadow: 0 2px 10px 7px rgba(0, 0, 0, 0.19);
+}
+
+#t_language {
+    position: absolute;
+    font-size: 31px;
+    font-weight: 300;
+    color: #fff;
+    margin: 50px 0 0 30px;
+    cursor: default;
+}
+
+#user_info {
+    position: absolute;
+    top: 140px;
+    left: 30px;
+}
+
+#user_info:hover {
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+#pwd_info {
+    position: absolute;
+    top: 200px;
+    left: 30px;
+}
+
+#pwd_info:hover {
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.picture {
+    vertical-align: bottom;
+    width: 28px;
+    height: 28px;
+}
+
+.u_content {
+    line-height: 30px;
+    color: #fff;
+    font-size: 16px;
+}
+
+input {
+    width: 210px;
+    background: rgba(255, 255, 255, 0);
+    border: 0;
+    border-radius: 4px;
+    outline: none;
+}
+
+input::-webkit-input-placeholder {
+    color: #fff;
+    opacity: .4;
+}
+
+input::-ms-input-placeholder {
+    color: #fff;
+    opacity: .4;
+}
+
+#sign_btn {
+    position: absolute;
+    top: 300px;
+    left: 50%;
+    margin-left: -100px;
+    width: 200px;
+    height: 50px;
+    border-radius: 50px;
+    border: 1px solid #ccc;
+    background: rgba(240, 240, 241, .3);
+    font-size: 18px;
+    color: #fff;
+}
+
+#sign_btn:hover {
+    cursor: pointer;
+    box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.19);
+}
+
+#sign_btn:focus {
+    outline: none;
+}
+
+a {
+    position: absolute;
+    top: 94%;
+    left: 75%;
+    font-size: 14px;
+}

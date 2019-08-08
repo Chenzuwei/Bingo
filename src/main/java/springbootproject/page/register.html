@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <link href="../assets/css/register.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+</head>
+<script>
+    function register() {
+        if ($("#username").val() == "") {
+            alert("用户名不能为空！");
+        } else if ($("#email").val() == "") {
+            alert("邮箱不能为空！");
+        } else if ($("#telphone").val() == "") {
+            alert("手机号不能为空！");
+        } else if ($("#password").val() == "") {
+            alert("密码不能为空！");
+        } else {
+            var user = {
+                "username": $("#username").val(),
+                "email": $("#email").val(),
+                "tel": $("#telphone").val(),
+                "pwd": $("#password").val()
+            };
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/user/register",
+                data: "str=" + JSON.stringify(user),
+                success: function (res) {
+                    if (res.result != 'success') {
+                        alert(res.result);
+                    } else {
+                        alert("注册成功！");
+                        window.location.href = "login.html";
+                    }
+                }
+            });
+        }
+    }
+</script>
+<body>
+<div id="sign_up">
+    <div id="t_language">Sign Up</div>
+    <div id="u_info">
+        <img class="picture" src="../assets/image/user.png">
+        <input class="u_content" id="username" name="username" placeholder="Username" required type="text">
+        <hr>
+    </div>
+    <div id="u_email">
+        <img class="picture" src="../assets/image/email.png">
+        <input class="u_content" id="email" name="email" placeholder="Email" required type="email">
+        <hr>
+    </div>
+    <div id="u_telphone">
+        <img class="picture" src="../assets/image/telephone.png">
+        <input class="u_content" id="telphone" name="telphone" placeholder="Telphone" required type="tel">
+        <hr>
+    </div>
+    <div id="pwd_info">
+        <img class="picture" src="../assets/image/pwd.png">
+        <input class="u_content" id="password" maxlength="16" name="pwd" placeholder="Password" required
+               type="password">
+        <hr>
+    </div>
+    <button id="sign_btn" onclick="register()">SIGN UP</button>
+
+    <div id="footer">
+        <hr id="hr">
+        <span>Already an Account?</span>
+        <a href="login.html">Sign In</a>
+    </div>
+</div>
+</body>
+</html>
